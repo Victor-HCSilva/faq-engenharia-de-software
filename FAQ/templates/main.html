@@ -1,0 +1,44 @@
+<h1>Criar usuário</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form_user.as_p }}
+    <button type="submit" name="submit_profile">Enviar</button> <!-- Adicionado name -->
+</form>
+
+
+<h1>Criar Perfil</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form_profile.as_p }}
+    <button type="submit" name="submit_profile">Enviar</button> <!-- Adicionado name -->
+</form>
+
+
+<h1>Inserir resposta</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form_pergunta.as_p }}
+    <button type="submit" name="submit_resposta">Enviar</button> <!-- Corrigido name para submit_resposta -->
+</form>
+
+<h1>Perguntas e respostas</h1>
+
+{% for categoria_nome, lista_de_perguntas in categorias.items %}
+    <p>
+        <h1>Categoria - {{ categoria_nome }}:</h1>
+        {% if lista_de_perguntas %} {# Verifica se a lista não está vazia para não exibir categoria sem perguntas #}
+            <ul> {# Use uma lista para organizar as perguntas de cada categoria #}
+                {% for pergunta in lista_de_perguntas %}
+                    <li>
+                        <strong>Pergunta:</strong> {{ pergunta.pergunta }}
+                        <br>
+                        <strong>Resposta:</strong> {{ pergunta.resposta }} {# Assumindo que 'resposta' é um campo do seu modelo Pergunta #}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhuma pergunta para esta categoria.</p>
+        {% endif %}
+    </p>
+{% endfor %}
