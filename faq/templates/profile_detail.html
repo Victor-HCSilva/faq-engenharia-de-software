@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <a href="{% url 'home' %}" class="text-secondary mb-3 d-block"><i class="fas fa-arrow-left me-2"></i> Voltar</a>
+        <div class="card p-4 shadow">
+            <h2 class="mb-4">Perfil</h2>
+            <div class="row align-items-center mb-4">
+                <div class="col-auto">
+                    {% if user_profile.profile_image %}
+                    <img src="{{ user_profile.profile_image.url }}" alt="Foto de Perfil" class="profile-pic">
+                    {% else %}
+                    <i class="fas fa-user-circle fa-8x text-secondary"></i>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <p class="mb-1"><strong>Nome:</strong> {{ user_profile.full_name|default:"Não informado" }}</p>
+                    <p class="mb-1"><strong>Usuário:</strong> {{ user_profile.username }}</p>
+                    <p class="mb-1"><strong>Senha:</strong> ********</p>
+                </div>
+            </div>
+            
+            <a href="{% url 'profile_update' %}" class="btn btn-primary mt-3">Alterar Informações</a>
+            <a href="{% url 'password_change' %}" class="btn btn-outline-secondary mt-2">Alterar Senha</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

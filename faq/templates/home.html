@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Seção de Perfil (Esquerda) -->
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            {% with user=request.user %}
+            <a href="{% url 'profile' %}">
+                {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Foto de Perfil" class="profile-pic mb-3">
+                {% else %}
+                <i class="fas fa-user-circle fa-8x mb-3 text-secondary"></i>
+                {% endif %}
+            </a>
+            
+            <h5 class="card-title">{{ user.full_name|default:user.username }}</h5>
+            <p class="text-muted">Usuário ativo</p>
+
+            <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm mt-2">Perfil</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm mt-2">Sair</a>
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- Seção de Pesquisa e FAQ (Direita) -->
+    <div class="col-md-8">
+        <div class="card p-4 shadow">
+            <h4 class="mb-4"><i class="fas fa-question-circle me-2"></i>Pesquisas Frequentes</h4>
+
+            <!-- Barra de Pesquisa -->
+            <form method="get" action="{% url 'home' %}" class="input-group mb-4">
+                <input type="text" name="q" class="form-control" placeholder="Pesquisar dúvidas..." value="{{ search_query|default:'' }}">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Pesquisar</button>
+            </form>
+
+            {% if search_query and articles %}
+                <!-- Resultados da Busca -->
+                <h5 class="mt-4">Resultados para "{{ search_query }}"</h5>
+                <ul class="list-group list-group-flush">
+                    {% for article in articles %}
+                    <li class="list-group-item">
+                        <a href="{% url 'article_detail' article.pk %}" class="text-decoration-none">{{ article.title }}</a>
+                        <p class="text-muted small">{{ article.content|truncatechars:100 }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            {% elif search_query and not articles %}
+                <div class="alert alert-warning">Nenhum resultado encontrado para "{{ search_query }}".</div>
+            
+            {% else %}
+                <!-- Perguntas Frequentes Iniciais (Wireframe: Titulo A, B, C, D) -->
+                <div class="list-group">
+                    {% for article in frequent_questions %}
+                    <a href="{% url 'article_detail' article.pk %}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-arrow-right me-2"></i> 
+                        <strong>{{ article.title }}</strong>
+                        <p class="text-muted small mb-0">{% if article.content %}It is a long established fact that a reader will be distracted by the readable content.{% endif %}</p>
+                    </a>
+                    {% empty %}
+                    <p class="text-muted">Nenhuma pergunta frequente cadastrada.</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

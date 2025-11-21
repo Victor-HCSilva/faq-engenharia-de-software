@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<div class="card p-5 shadow">
+    <a href="{% url 'home' %}" class="text-secondary mb-3"><i class="fas fa-arrow-left me-2"></i> Voltar à Busca</a>
+
+    <h1 class="mb-4">{{ article.title }}</h1>
+    
+    <div class="article-content mb-5">
+        {{ article.content|linebreaks }}
+        <p class="text-muted small mt-4">Última atualização: {{ article.updated_at|date:"d/m/Y" }}</p>
+    </div>
+
+    <!-- Tópicos Semelhantes (Links de temas semelhantes) -->
+    {% if similar_articles %}
+    <hr>
+    <h5 class="mt-4">Temas Semelhantes:</h5>
+    <ul class="list-group list-group-flush">
+        {% for similar in similar_articles %}
+        <li class="list-group-item">
+            <a href="{% url 'article_detail' similar.pk %}" class="text-decoration-none">{{ similar.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}
