@@ -5,10 +5,10 @@ from .models import CustomUser
 class CustomUserUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['full_name', 'profile_image', 'username']
+        fields = ['full_name', 'profile_image']
         widgets = {
-            # Oculta o campo username, mas o mantém no form para consistência
-            'username': forms.TextInput(attrs={'style': 'display: none;'}), 
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite seu nome completo'}),
+            'profile_image': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 # NOTA: O formulário de Login é tratado pela views.LoginView do Django.

@@ -77,6 +77,11 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     
     def get_object(self, queryset=None):
         return self.request.user
+    
+    def get_form_kwargs(self):
+        """Garante que FILES sejam incluídos no formulário para upload de imagem"""
+        kwargs = super().get_form_kwargs()
+        return kwargs
 
 
 # 7. Password Change View (Wireframe: Alterar Informações - sub-fluxo de senha)
