@@ -9,17 +9,24 @@
             <h5 class="card-title text-start mb-3">Acesso</h5>
             <form method="post">
                 {% csrf_token %}
+
+                <!-- ADICIONE ESTA LINHA ABAIXO -->
+                <!-- Se existir um parâmetro ?next= na URL, ele usa. Se não, usa '/' -->
+                <input type="hidden" name="next" value="{{ next|default:'/' }}">
+
                 <div class="mb-3">
                     <input type="text" name="username" class="form-control" placeholder="Nome:" required>
                 </div>
                 <div class="mb-3">
                     <input type="password" name="password" class="form-control" placeholder="Senha:" required>
                 </div>
+
                 {% if form.errors %}
                 <div class="alert alert-danger" role="alert">
                     Usuário ou senha inválidos.
                 </div>
                 {% endif %}
+
                 <button type="submit" class="btn btn-primary float-end">Entrar</button>
             </form>
         </div>

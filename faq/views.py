@@ -14,7 +14,7 @@ from .forms import CustomUserUpdateForm
 class CustomLoginView(LoginView):
     template_name = 'login.html'
     redirect_authenticated_user = True
-
+    next_page = '/'
 # 2. Logout View (Padrão Django)
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login')
