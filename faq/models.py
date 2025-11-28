@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-    
+
     class Meta:
         verbose_name = "Usuário Customizado"
         verbose_name_plural = "Usuários Customizados"
@@ -20,7 +20,7 @@ class FAQTopic(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name = "Tópico FAQ"
         verbose_name_plural = "Tópicos FAQ"
@@ -32,7 +32,7 @@ class FAQArticle(models.Model):
     topic = models.ForeignKey(FAQTopic, on_delete=models.CASCADE, related_name='articles', verbose_name="Tópico")
     content = models.TextField(verbose_name="Conteúdo (Passo a Passo)")
     is_frequent = models.BooleanField(default=False, verbose_name="Pergunta Frequente")
-    
+
     # Relação N:N para links de temas semelhantes
     similar_articles = models.ManyToManyField('self', blank=True, symmetrical=False, verbose_name="Artigos Semelhantes")
 
