@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from decouple import config as from_env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,12 +18,12 @@ LOGIN_REDIRECT_URL = '/'
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c*dal+ork_#qjjk1zo35kf3pb72z)hilhhe@#3mwxzhu!*4n%r'
+SECRET_KEY = from_env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = from_env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = from_env('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
